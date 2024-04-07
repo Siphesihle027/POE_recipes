@@ -37,9 +37,9 @@
                 ingridents.Add(ing);
             }
 
-            foreach (var i in ingridents)
+            foreach (var ing in ingridents)
             {
-                Console.WriteLine("{0} {1} of {2}", i.quantity, i.unit, i.name);
+                Console.WriteLine("{0} {1} of {2}", ing.quantity, ing.unit, ing.name);
             }
         }
     }
