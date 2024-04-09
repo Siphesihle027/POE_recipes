@@ -6,9 +6,9 @@
 
     class Ingridents
     {
-        public string name { get; set; }
-        public string unit { get; set; }
-        public double quantity { get; set; }
+        public string[] name { get; set; }
+        public string[] unit { get; set; }
+        public int[] quantity { get; set; }
 
         public Ingridents(string name, string unit, double quantity)
         {
@@ -16,12 +16,22 @@
             this.unit = unit;
             this.quantity = quantity;
         }
+
+
+    }
+
+    class Steps
+    {
+        public string[] steps { get; set; }
+
+
     }
 
     internal class Program
     {
         static void Main(string[] args)
         {
+
             List<Ingridents> ingridents = new List<Ingridents>();
 
             for (int i = 0; i < 2; i++)
@@ -35,12 +45,15 @@
 
                 var ing = new Ingridents(ingri, unit, quantity);
                 ingridents.Add(ing);
+
             }
 
             foreach (var ing in ingridents)
             {
                 Console.WriteLine("{0} {1} of {2}", ing.quantity, ing.unit, ing.name);
             }
+
+
         }
     }
 }
