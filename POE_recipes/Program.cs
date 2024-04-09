@@ -10,6 +10,8 @@
         public string[] unit { get; set; }
         public int[] quantity { get; set; }
 
+        private int scale = 1;
+
         public Ingridents(string name, string unit, double quantity)
         {
             this.name = name;
@@ -25,6 +27,18 @@
         public string[] steps { get; set; }
 
 
+    }
+
+    class Displays
+    {
+        List<Ingridents> ingridents = new List<Ingridents>();
+        public void displayR()
+        {
+            foreach (var ing in ingridents)
+            {
+                Console.WriteLine("{0}{1} of {2}", ing.quantity, ing.unit, ing.name);
+            }
+        }
     }
 
     internal class Program
@@ -48,10 +62,10 @@
 
             }
 
-            foreach (var ing in ingridents)
+           /* foreach (var ing in ingridents)
             {
                 Console.WriteLine("{0} {1} of {2}", ing.quantity, ing.unit, ing.name);
-            }
+            }*/
 
 
         }
