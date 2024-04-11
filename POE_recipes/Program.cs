@@ -22,20 +22,21 @@
             this.unit = unit;
             this.quantity = quantity;
 
-
         }
 
 
     }
 
-    class Steps
+    class Steps 
     {
         public string steps; // { get; set; }
         System.Collections.ArrayList Steps_arr = new System.Collections.ArrayList();
 
-        public void Step(string steps)
+        public void StepInput(string steps)
         {
             this.steps = steps;
+
+            Steps_arr.Add(steps);
         }
 
 
@@ -43,12 +44,13 @@
 
     class Display : Steps
     {
-        
+        System.Collections.ArrayList Ingredients = new System.Collections.ArrayList();
+
         public void displayR()
         {
             foreach (var ing in Ingredients)
             {
-                WriteLine("{0}{1} of {2}", ing.quantity, ing.unit, ing.name);
+                WriteLine("{0}{1} of {2}", ing);
             }
 
             for (int i = 0; i < steps.Length; i++)
@@ -81,6 +83,7 @@
 
             WriteLine("Welcome to the Recipe Application");
             ReadLine();
+            Clear();
 
             WriteLine("How many ingridients will you need for your recipe?");
             ing_count = Int32.Parse(ReadLine());
