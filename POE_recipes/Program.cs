@@ -8,9 +8,11 @@
 
     class Ingridents
     {
-        public string[] name { get; set; }
-        public string[] unit { get; set; }
-        public int[] quantity { get; set; }
+        public string name;
+        public string unit;
+        public double quantity;
+
+        System.Collections.ArrayList Ingredients = new System.Collections.ArrayList();
 
         private int scale = 1;
 
@@ -19,14 +21,17 @@
             this.name = name;
             this.unit = unit;
             this.quantity = quantity;
+
+
         }
 
 
     }
 
-    class Steps: Ingridents
+    class Steps
     {
-        public string[] steps { get; set; }
+        public string steps; // { get; set; }
+        System.Collections.ArrayList Steps_arr = new System.Collections.ArrayList();
 
         public void Step(string steps)
         {
@@ -38,10 +43,10 @@
 
     class Display : Steps
     {
-        List<Ingridents> ingridents = new List<Ingridents>();
+        
         public void displayR()
         {
-            foreach (var ing in ingridents)
+            foreach (var ing in Ingredients)
             {
                 WriteLine("{0}{1} of {2}", ing.quantity, ing.unit, ing.name);
             }
@@ -67,12 +72,12 @@
     {
         static void Main(string[] args)
         {
-            int ing_count = 1, step_count = 1;
+            int? ing_count = 1, step_count = 1;
             string ingri, unit, step;
             double quantity;
 
 
-            List<Ingridents> ingridents = new List<Ingridents>();
+            //System.Collections.ArrayList Ingredients = new System.Collections.ArrayList();
 
             WriteLine("Welcome to the Recipe Application");
             ReadLine();
@@ -90,8 +95,8 @@
                 Console.WriteLine("Please the enter how many {0}(s) of {1} you will be needed", unit, ingri);
                 quantity = Convert.ToDouble(ReadLine());
 
-                var ing = new Ingridents(ingri, unit, quantity);
-                ingridents.Add(ing);
+                //var ing = new Ingridents(ingri, unit, quantity);
+                //ingridents.Add(ing);
 
             }
 
@@ -101,7 +106,7 @@
 
             for (int i = 0; i < step_count; i++)
             {
-                Console.WriteLine("Please enter enter step no.{1}",(step_count + 1));
+                Console.WriteLine("Please enter enter step no.{0}:",(i + 1));
                 step = ReadLine();
                 
          
