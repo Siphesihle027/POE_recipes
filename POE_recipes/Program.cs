@@ -3,26 +3,29 @@
     using System;
     using System.Collections;
     using System.Net.NetworkInformation;
+    using System.Runtime.ConstrainedExecution;
     using System.Xml.Linq;
     using static System.Console;
-
-    class Ingridents
+    /*
+    class Ingredients
     {
         public string name;
         public string unit;
         public double quantity;
 
-        System.Collections.ArrayList Ingredients = new System.Collections.ArrayList();
+        //System.Collections.ArrayList Ingredients = new System.Collections.ArrayList();
+        //var arlist1 = new ArrayList();
 
-        private int scale = 1;
-
-        public Ingridents(string name, string unit, double quantity)
+        public Ingredients(string name, string unit, double quantity)
         {
             this.name = name;
             this.unit = unit;
             this.quantity = quantity;
 
+            //Ingredients.Add(name, unit, quantity);
         }
+
+
 
 
     }
@@ -42,15 +45,14 @@
 
     }
 
-    class Display : Steps
+    class Display
     {
-        System.Collections.ArrayList Ingredients = new System.Collections.ArrayList();
-
-        public void displayR()
+       
+        public void displayR(ArrayList name_arr, ArrayList unit_arr, ArrayList quantity_arr, ArrayList steps)
         {
-            foreach (var ing in Ingredients)
+            for (int i = 0; i < name_arr.Length; i++)
             {
-                WriteLine("{0}{1} of {2}", ing);
+                WriteLine("{0}{1} of {2}", name_arr[i], unit_arr[i], quantity_arr[i]);
             }
 
             for (int i = 0; i < steps.Length; i++)
@@ -66,41 +68,53 @@
 
         public void menu()
         {
-            WriteLine("Menu\n1.Enter new recipe\n2.View recipe");
+            WriteLine("Menu\n1.Enter new recipe\n2.View recipe\n3.Exit");
+            ReadLine();
+
         }
-    }
+
+        public void option()
+        {
+            WriteLine("Please pick your unit of measurement:\n1. Teaspoon\n2.Tablespoon\n3.Cup\n4.No unit");
+        }
+
+
+    }*/
 
     internal class Program
     {
         static void Main(string[] args)
         {
-            int? ing_count = 1, step_count = 1;
+            var name_arr = new ArrayList();
+            var unit_arr = new ArrayList();
+            var quantity_arr = new ArrayList();
+            var step_arr = new ArrayList();
+
+            int ing_count = 1, step_count = 1;
             string ingri, unit, step;
-            double quantity;
+            double? quantity;
 
-
-            //System.Collections.ArrayList Ingredients = new System.Collections.ArrayList();
 
             WriteLine("Welcome to the Recipe Application");
             ReadLine();
             Clear();
 
+            
+
             WriteLine("How many ingridients will you need for your recipe?");
             ing_count = Int32.Parse(ReadLine());
+            Clear();    
 
 
             for (int i = 0; i < ing_count; i++)
             {
+                Console.WriteLine("Ingredient " + (i+1));
                 Console.WriteLine("Please enter the Name");
                 ingri = ReadLine();
                 Console.WriteLine("Please enter the Unit used");
                 unit = ReadLine();
                 Console.WriteLine("Please the enter how many {0}(s) of {1} you will be needed", unit, ingri);
                 quantity = Convert.ToDouble(ReadLine());
-
-                //var ing = new Ingridents(ingri, unit, quantity);
-                //ingridents.Add(ing);
-
             }
 
 
@@ -110,8 +124,7 @@
             for (int i = 0; i < step_count; i++)
             {
                 Console.WriteLine("Please enter enter step no.{0}:",(i + 1));
-                step = ReadLine();
-                
+                step = ReadLine();                
          
             }
 
