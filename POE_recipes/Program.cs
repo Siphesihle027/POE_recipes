@@ -6,48 +6,9 @@
     using System.Runtime.ConstrainedExecution;
     using System.Xml.Linq;
     using static System.Console;
-    /*
-    class Ingredients
-    {
-        public string name;
-        public string unit;
-        public double quantity;
-
-        //System.Collections.ArrayList Ingredients = new System.Collections.ArrayList();
-        //var arlist1 = new ArrayList();
-
-        public Ingredients(string name, string unit, double quantity)
-        {
-            this.name = name;
-            this.unit = unit;
-            this.quantity = quantity;
-
-            //Ingredients.Add(name, unit, quantity);
-        }
-
-
-
-
-    }
-
-    class Steps 
-    {
-        public string steps; // { get; set; }
-        System.Collections.ArrayList Steps_arr = new System.Collections.ArrayList();
-
-        public void StepInput(string steps)
-        {
-            this.steps = steps;
-
-            Steps_arr.Add(steps);
-        }
-
-
-    }
-
+    
     class Display
     {
-       
         public void displayR(ArrayList name_arr, ArrayList unit_arr, ArrayList quantity_arr, ArrayList steps)
         {
             for (int i = 0; i < name_arr.Length; i++)
@@ -77,9 +38,9 @@
         {
             WriteLine("Please pick your unit of measurement:\n1. Teaspoon\n2.Tablespoon\n3.Cup\n4.No unit");
         }
+       
 
-
-    }*/
+    }
 
     internal class Program
     {
@@ -90,7 +51,7 @@
             var quantity_arr = new ArrayList();
             var step_arr = new ArrayList();
 
-            int ing_count = 1, step_count = 1;
+            int? ing_count = 1, step_count = 1;
             string ingri, unit, step;
             double? quantity;
 
