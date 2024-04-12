@@ -10,6 +10,7 @@
 
     class Display
     {
+        //Function used to display recipe
         public void display_Rec(string[] name_arr, string[] unit_arr, double[] quantity_arr, string[] steps, double scale)
         {
             Console.WriteLine("Ingredients");
@@ -34,11 +35,13 @@
             }
         }
 
+        //The Unit options
         public void unit_opt()
         {
             WriteLine("Please pick your unit of measurement:\n1. Teaspoon\n2.Tablespoon\n3.Cup\n4.No unit");
         }
 
+        //The menu options
         public void menu()
         {
             WriteLine("Menu\n1.Enter new recipe\n2.View recipe\n3.Clear recipe\n4.Exit");
@@ -52,22 +55,27 @@
     {
         static void Main(string[] args)
         {
+            //Declaration of the array
             string[] name_arr = new string[] { };
             string[] unit_arr = new string[] { };
             double[] quantity_arr = new double[] { };
             string[] step_arr = new string[] { };
 
+            //THe local variables
             int ing_count = 1, step_count = 1;
             string ingri, unit = null, step, unit_input, menu_op = "1";
             double quantity, scale = 1.0;
             bool bloop = false;
 
+            //Calling the Display class
             Display display = new Display();
 
+            //The welcome message
             WriteLine("Welcome to the Recipe Application");
             ReadLine();
             Clear();
 
+            //Main menu loop
             while ((menu_op != "4"))
             {
                 display.menu();
@@ -77,28 +85,27 @@
 
                 switch (menu_op)
                 {
+                    //Enter Recipe
                     case "1":
-
-                        //Array.Clear(name_arr, 0, name_arr.Length);
-                        //Array.Clear(unit_arr, 0, unit_arr.Length);
-                        //Array.Clear(quantity_arr, 0, quantity_arr.Length);
-                        //Array.Clear(step_arr, 0, step_arr.Length);
 
                         WriteLine("Number of ingredients you will need for your recipe?");
                         ing_count = Int32.Parse(ReadLine());
                         Clear();
 
+                        //redeclaring the array once we know the length
                         name_arr = new string[ing_count];
                         unit_arr = new string[ing_count];
                         quantity_arr = new double[ing_count];
 
                         for (int i = 0; i < ing_count; i++)
                         {
+                            //Ingredient name
                             Console.WriteLine("Ingredient " + (i + 1));
                             Console.WriteLine("Please enter the Name");
                             ingri = ReadLine();
                             name_arr[i] = ingri;
 
+                            //Ingredient Unit
                             WriteLine("Please pick your unit of measurement:\n1.Teaspoon\n2.Tablespoon\n3.Cup\n4.No unit");
                             bloop = false;
                             while (bloop == false)
@@ -127,6 +134,7 @@
                             }
                             unit_arr[i] = unit;
 
+                            //Ingredient Quantity
                             if (unit == null)
                             {
                                 Console.WriteLine("Please the enter how many {0}(s) you will be needed", ingri);
@@ -142,6 +150,7 @@
 
                         Clear();
 
+                        //Recipe steps
                         Console.WriteLine("Number of steps there are in your recipe?");
                         step_count = Int32.Parse(ReadLine());
                         step_arr = new string[step_count];
@@ -156,27 +165,28 @@
                         break;
 
                     case "2":
-                        bloop = false;
-                        while (bloop == false)
-                        {
-                            bloop = true;
-                            Console.WriteLine("Would like to scale you recipe.\n1. Orginal Measurement\n2. Double\n3. Triple\n4. Half");
-                            switch (ReadLine())
-                            {
-                                case "1": scale = 1; break;
-                                case "2": scale = 2; break;
-                                case "3": scale = 3; break;
-                                case "4": scale = 0.5; break;
-                                default:
-                                    Clear();
-                                    WriteLine("You entered an Invalid input");
-                                    bloop = false;
-                                    break;
-
-                            }
-                        }
+                        //View recipe                    
                         if (name_arr.Length > 0)
                         {
+                            bloop = false;
+                            while (bloop == false)
+                            {
+                                bloop = true;
+                                Console.WriteLine("Would like to scale you recipe.\n1. Orginal Measurement\n2. Double\n3. Triple\n4. Half");
+                                switch (ReadLine())
+                                {
+                                    case "1": scale = 1; break;
+                                    case "2": scale = 2; break;
+                                    case "3": scale = 3; break;
+                                    case "4": scale = 0.5; break;
+                                    default:
+                                        Clear();
+                                        WriteLine("You entered an Invalid input");
+                                        bloop = false;
+                                        break;
+
+                                }
+                            }
                             display.display_Rec(name_arr, unit_arr, quantity_arr, step_arr, scale);
                             ReadLine();
                             Clear();
@@ -184,6 +194,7 @@
                         }
                         else
                         {
+                            //Message if no recipe enter or recipe is deleted
                             WriteLine("Please enter a recipe first before returning");
                             ReadLine();
                             Clear();
@@ -193,6 +204,7 @@
                         break;
 
                     case "3":
+                        //Function to delete recipe
                         Write("ARE YOU USRE YOU WANT TO CLEAR THE RECIPE\n1.Yes\n2.No");
                         string clear = ReadLine();
                         switch (clear)
@@ -217,6 +229,7 @@
                         break;
 
                     case "4":
+                        //Exit app
                         Clear();
                         WriteLine("Hope to see you again\nThanks");
                         break;
