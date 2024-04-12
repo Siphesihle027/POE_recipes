@@ -6,39 +6,45 @@
     using System.Runtime.ConstrainedExecution;
     using System.Xml.Linq;
     using static System.Console;
-    
+    using static System.Runtime.InteropServices.JavaScript.JSType;
+
     class Display
     {
-        public void displayR(ArrayList name_arr, ArrayList unit_arr, ArrayList quantity_arr, ArrayList steps)
+        public void display_Rec(string[] name_arr, string[] unit_arr, double[] quantity_arr, string[] steps, double scale)
         {
-            for (int i = 0; i < name_arr.Length; i++)
+            Console.WriteLine("Ingredients");
+            for (int i = 0; i
+                            < name_arr.Length; i++)
             {
-                WriteLine("{0}{1} of {2}", name_arr[i], unit_arr[i], quantity_arr[i]);
+                if (unit_arr[i] != null)
+                {
+                    WriteLine("{0} {1}s of {2}", quantity_arr[i] * scale, unit_arr[i], name_arr[i]);
+                }
+                else
+                {
+                    WriteLine("{0} {1}s", quantity_arr[i] * scale, name_arr[i]);
+                }
+
             }
 
+            WriteLine("\nInstructions");
             for (int i = 0; i < steps.Length; i++)
             {
-                WriteLine("{0}. {1}",(i+1), steps[i]);
+                WriteLine("{0}. {1}", (i + 1), steps[i]);
             }
         }
 
-        public void options()
+        public void unit_opt()
         {
             WriteLine("Please pick your unit of measurement:\n1. Teaspoon\n2.Tablespoon\n3.Cup\n4.No unit");
         }
 
         public void menu()
         {
-            WriteLine("Menu\n1.Enter new recipe\n2.View recipe\n3.Exit");
-            ReadLine();
+            WriteLine("Menu\n1.Enter new recipe\n2.View recipe\n3.Clear recipe\n4.Exit");
 
         }
 
-        public void option()
-        {
-            WriteLine("Please pick your unit of measurement:\n1. Teaspoon\n2.Tablespoon\n3.Cup\n4.No unit");
-        }
-       
 
     }
 
@@ -46,49 +52,179 @@
     {
         static void Main(string[] args)
         {
-            var name_arr = new ArrayList();
-            var unit_arr = new ArrayList();
-            var quantity_arr = new ArrayList();
-            var step_arr = new ArrayList();
+            string[] name_arr = new string[] { };
+            string[] unit_arr = new string[] { };
+            double[] quantity_arr = new double[] { };
+            string[] step_arr = new string[] { };
 
-            int? ing_count = 1, step_count = 1;
-            string ingri, unit, step;
-            double? quantity;
+            int ing_count = 1, step_count = 1;
+            string ingri, unit = null, step, unit_input, menu_op = "1";
+            double quantity, scale = 1.0;
+            bool bloop = false;
 
+            Display display = new Display();
 
             WriteLine("Welcome to the Recipe Application");
             ReadLine();
             Clear();
 
-            
-
-            WriteLine("How many ingridients will you need for your recipe?");
-            ing_count = Int32.Parse(ReadLine());
-            Clear();    
-
-
-            for (int i = 0; i < ing_count; i++)
+            while ((menu_op != "4"))
             {
-                Console.WriteLine("Ingredient " + (i+1));
-                Console.WriteLine("Please enter the Name");
-                ingri = ReadLine();
-                Console.WriteLine("Please enter the Unit used");
-                unit = ReadLine();
-                Console.WriteLine("Please the enter how many {0}(s) of {1} you will be needed", unit, ingri);
-                quantity = Convert.ToDouble(ReadLine());
+                display.menu();
+                menu_op = ReadLine();
+
+                Clear();
+
+                switch (menu_op)
+                {
+                    case "1":
+
+                        //Array.Clear(name_arr, 0, name_arr.Length);
+                        //Array.Clear(unit_arr, 0, unit_arr.Length);
+                        //Array.Clear(quantity_arr, 0, quantity_arr.Length);
+                        //Array.Clear(step_arr, 0, step_arr.Length);
+
+                        WriteLine("Number of ingredients you will need for your recipe?");
+                        ing_count = Int32.Parse(ReadLine());
+                        Clear();
+
+                        name_arr = new string[ing_count];
+                        unit_arr = new string[ing_count];
+                        quantity_arr = new double[ing_count];
+
+                        for (int i = 0; i < ing_count; i++)
+                        {
+                            Console.WriteLine("Ingredient " + (i + 1));
+                            Console.WriteLine("Please enter the Name");
+                            ingri = ReadLine();
+                            name_arr[i] = ingri;
+
+                            WriteLine("Please pick your unit of measurement:\n1.Teaspoon\n2.Tablespoon\n3.Cup\n4.No unit");
+                            bloop = false;
+                            while (bloop == false)
+                            {
+                                bloop = true;
+                                unit_input = ReadLine();
+                                switch (unit_input)
+                                {
+                                    case "1":
+                                        unit = "Teaspoon";
+                                        break;
+                                    case "2":
+                                        unit = "Tablesppon";
+                                        break;
+                                    case "3":
+                                        unit = "Cups";
+                                        break;
+                                    case "4":
+                                        unit = null;
+                                        break;
+                                    default:
+                                        WriteLine("Invalid entry\nPlease pick a valid input.");
+                                        bloop = false;
+                                        break;
+                                }
+                            }
+                            unit_arr[i] = unit;
+
+                            if (unit == null)
+                            {
+                                Console.WriteLine("Please the enter how many {0}(s) you will be needed", ingri);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Please the enter how many {0}(s) of {1} you will be needed", unit, ingri);
+                            }
+                            quantity = Convert.ToDouble(ReadLine());
+                            quantity_arr[i] = quantity;
+
+                        }
+
+                        Clear();
+
+                        Console.WriteLine("Number of steps there are in your recipe?");
+                        step_count = Int32.Parse(ReadLine());
+                        step_arr = new string[step_count];
+
+                        for (int i = 0; i < step_count; i++)
+                        {
+                            Console.WriteLine("Please enter enter step no.{0}:", (i + 1));
+                            step = ReadLine();
+                            step_arr[i] = step;
+                        }
+                        Clear();
+                        break;
+
+                    case "2":
+                        bloop = false;
+                        while (bloop == false)
+                        {
+                            bloop = true;
+                            Console.WriteLine("Would like to scale you recipe.\n1. Orginal Measurement\n2. Double\n3. Triple\n4. Half");
+                            switch (ReadLine())
+                            {
+                                case "1": scale = 1; break;
+                                case "2": scale = 2; break;
+                                case "3": scale = 3; break;
+                                case "4": scale = 0.5; break;
+                                default:
+                                    Clear();
+                                    WriteLine("You entered an Invalid input");
+                                    bloop = false;
+                                    break;
+
+                            }
+                        }
+                        if (name_arr.Length > 0)
+                        {
+                            display.display_Rec(name_arr, unit_arr, quantity_arr, step_arr, scale);
+                            ReadLine();
+                            Clear();
+
+                        }
+                        else
+                        {
+                            WriteLine("Please enter a recipe first before returning");
+                            ReadLine();
+                            Clear();
+                        }
+
+
+                        break;
+
+                    case "3":
+                        Write("ARE YOU USRE YOU WANT TO CLEAR THE RECIPE\n1.Yes\n2.No");
+                        string clear = ReadLine();
+                        switch (clear)
+                        {
+                            case "1":
+                                Array.Clear(name_arr, 0, name_arr.Length);
+                                Array.Clear(unit_arr, 0, unit_arr.Length);
+                                Array.Clear(quantity_arr, 0, quantity_arr.Length);
+                                Array.Clear(step_arr, 0, step_arr.Length);
+                                WriteLine("You have cleared the Recipe");
+                                break;
+                            case "2":
+                                WriteLine("You see, almost lost all that information");
+                                break;
+                            default:
+                                WriteLine("Not a valid entry");
+                                break;
+
+                        }
+                        ReadLine();
+                        Clear();
+                        break;
+
+                    case "4":
+                        Clear();
+                        WriteLine("Hope to see you again\nThanks");
+                        break;
+
+
+                }
+
             }
-
-
-            Console.WriteLine("How many steps are there in your recipe?");
-            step_count = Int32.Parse(ReadLine());
-
-            for (int i = 0; i < step_count; i++)
-            {
-                Console.WriteLine("Please enter enter step no.{0}:",(i + 1));
-                step = ReadLine();                
-         
-            }
-
 
         }
     }
